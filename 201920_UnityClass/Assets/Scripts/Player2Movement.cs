@@ -11,6 +11,10 @@ public class Player2Movement : MonoBehaviour
     public Vector3 jumpspd;
 
     public bool canJump;
+
+    
+
+    public bool swordSwung;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +40,7 @@ public class Player2Movement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            swingSword();
+            swordSwung = true;
         }
         if (transform.position.y < -8)
         {
@@ -45,10 +49,7 @@ public class Player2Movement : MonoBehaviour
     }
 
 
-    public void swingSword()
-    {
-        
-    }
+    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -56,5 +57,12 @@ public class Player2Movement : MonoBehaviour
         {
             canJump = true;
         } 
+    }
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.tag=="Player" && swordSwung)
+        {
+            swordSwung = false;
+        }
     }
 }
