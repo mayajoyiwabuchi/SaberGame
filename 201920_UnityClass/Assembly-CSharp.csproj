@@ -58,7 +58,6 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Player1Movement.cs" />
-     <Compile Include="Assets\Scripts\Player2Movement.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/Sarapptop/Documents/GitHub/SaberGame/201920_UnityClass/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
