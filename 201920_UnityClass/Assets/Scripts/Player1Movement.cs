@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player1Movement : MonoBehaviour
 {
     public GameObject gameManager;
+    public GameObject secondPlayer;
     
     public Vector3 movespdleft;
     public Vector3 movespdright;
@@ -16,50 +17,79 @@ public class Player1Movement : MonoBehaviour
     public bool swordSwung;
 
     public bool collidingPlayer;
+
+    private GameManager _gameManager;
+    private Rigidbody2D _rigidbody2D;
+    private Rigidbody2D _rigidbody2D1;
+    private Rigidbody2D _rigidbody2D2;
+    private Rigidbody2D _rigidbody2D3;
+
+    public Sprite swingingsword;
+    public Sprite idle;
+    private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer _spriteRenderer1;
+
+    public KeyCode upkey;
+    public KeyCode leftkey;
+    public KeyCode rightkey;
+    public KeyCode swingkey;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _spriteRenderer1 = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _rigidbody2D3 = secondPlayer.GetComponent<Rigidbody2D>();
+        _rigidbody2D2 = GetComponent<Rigidbody2D>();
+        _rigidbody2D1 = GetComponent<Rigidbody2D>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _gameManager = gameManager.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
         //depending on what WASD key u press
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(leftkey))
         {
             //makes the player face either left or right
-            transform.localScale = new Vector3(-1, 0);
+            
             //adds force to their rigidbody, makes them move left or right
-            GetComponent<Rigidbody2D>().AddForce(movespdleft);
+            _rigidbody2D2.AddForce(movespdleft);
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(rightkey))
         {
-            transform.localScale = new Vector3(1, 0);
-            GetComponent<Rigidbody2D>().AddForce(movespdright);
+            
+            _rigidbody2D1.AddForce(movespdright);
         }
-        if (Input.GetKeyDown(KeyCode.W) && canJump)
+        if (Input.GetKeyDown(upkey) && canJump)
         {
             //makes the player jump, adds force to y of rigidbody
-            GetComponent<Rigidbody2D>().AddForce(jumpspd);
+            _rigidbody2D.AddForce(jumpspd);
             //this bool says that the player is not on the ground
             //to set it to true, it must detect a collision with the platform
             //no double jumping!!
             canJump = false;
         }
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(swingkey))
         {
+            Debug.Log("sword swung");
             //checks to see if we are colliding with a player
+            swordSwung = true;
             if (collidingPlayer)
             {
-                
+                _rigidbody2D3.AddForce(transform.right*40);
             }
+
+            swordSwung = false;
         }
 
         if (transform.position.y < -8)
         {
-            gameManager.GetComponent<GameManager>().gameWinP2 = true;
+            _gameManager.gameWinP2 = true;
         }
+
+        
     }
 
 
@@ -67,12 +97,12 @@ public class Player1Movement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.CompareTag("Platform"))
         {
             canJump = true;
         }
 
-        if (collision.gameObject.tag=="Player")
+        if (collision.gameObject.CompareTag("Player"))
             //if the object collided with is a player
         {
             //sets boolean to true
@@ -83,7 +113,7 @@ public class Player1Movement : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.tag=="Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             //if the player is no longer colliding with the object
             //set boolean to false
