@@ -19,6 +19,7 @@ public class Player1Movement : MonoBehaviour
     private Rigidbody2D _rigidbody2D3;
     public int facing;
     public int player;
+    public int force;
     public KeyCode upkey;
     public KeyCode leftkey;
     public KeyCode rightkey;
@@ -66,10 +67,10 @@ public class Player1Movement : MonoBehaviour
                 switch (facing)
                 {
                     case 1:
-                        _rigidbody2D3.AddForce(transform.right * 400);
+                        _rigidbody2D3.AddForce(transform.right * force);
                         break;
                     case -1:
-                        _rigidbody2D3.AddForce(-transform.right * 400);
+                        _rigidbody2D3.AddForce(-transform.right * force);
                         break;
                 }
                 Debug.Log("hit player");
@@ -77,6 +78,8 @@ public class Player1Movement : MonoBehaviour
         }
         if (transform.position.y < -8)
         {
+            
+            Debug.Log("playing megalovania");
             Debug.Log("player "+player+" dead");
             switch (player)
             {
