@@ -7,6 +7,8 @@ public class Player1Movement : MonoBehaviour
 {
     public GameObject gameManager;
     public GameObject secondPlayer;
+    public GameObject blobwin;
+    public GameObject iseckewin;
     public Vector3 movespdleft;
     public Vector3 movespdright;
     public Vector3 jumpspd;
@@ -84,9 +86,11 @@ public class Player1Movement : MonoBehaviour
             switch (player)
             {
                 case 1:
+                    iseckewin.SetActive(true);
                     Debug.Log("Player 2 wins");
                     break;
                 case 2:
+                    blobwin.SetActive(true);
                     Debug.Log("Player 1 wins");
                     break;
             }
